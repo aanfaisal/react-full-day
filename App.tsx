@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Component} from 'react';
 import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 
 export default class App extends React.Component {
@@ -7,6 +7,7 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <Text>Hello World</Text>
         <Button title="click" onPress={()=> Alert.alert("Hai")}></Button>
+        <RestaurantItem />
       </View>
     );
   }
@@ -20,3 +21,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+class RestaurantItem extends Component {
+  render() {
+    return (
+      <View>
+        <Text>Nama Restoran</Text>
+      </View>
+    )
+  }
+}
