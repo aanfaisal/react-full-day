@@ -1,6 +1,6 @@
-import React,{Component} from 'react'
-import {StyleSheet, ScrollView} from 'react-native'
-import RestaurantItem from "./Restaurant";
+import React from "react";
+import { ScrollView, View, StyleSheet } from "react-native";
+import RestaurantItem from "./RestaurantItem";
 
 interface State {
   
@@ -15,7 +15,6 @@ interface Props {
     restaurants: Restaurant[]
 }
 
-//setelah bikin interface itu dimasukkan ke Component Props dan State
 export default class RestaurantList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);

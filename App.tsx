@@ -1,5 +1,5 @@
-import React, { Component, PureComponent } from "react";
-import { ActivityIndicator, StyleSheet, Text, View, Button, Alert, StatusBar } from "react-native";
+import React, { Component } from "react";
+import { ActivityIndicator, StyleSheet, View, StatusBar } from "react-native";
 import axios from "axios";
 import Header from "./src/component/Header";
 import RestaurantList from "./src/component/RestaurantList";
@@ -17,6 +17,7 @@ export default class App extends React.Component<any, State> {
       restaurants: []
     };
   }
+
   componentDidMount() {
     this.getData();
   }
@@ -55,9 +56,12 @@ export default class App extends React.Component<any, State> {
   render() {
     return (
       <View style={styles.container}>
-        <Header />
-        <RestaurantList />
-      </View>
+      <Header />
+        {this.state.isLoading &&
+        <ActivityIndicator size="large"/>}
+        
+        <RestaurantList restaurants={this.state.restaurants} />
+    </View>
     );
   }
 }
