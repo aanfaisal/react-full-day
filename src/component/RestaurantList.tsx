@@ -1,34 +1,42 @@
 import React,{Component} from 'react'
 import {StyleSheet, ScrollView} from 'react-native'
-
 import RestaurantItem from "./Restaurant";
 
-export default class RestaurantList extends Component {
-  state = {
-    restaurants:[
-      "Sambel", "Kwetiau", "Geprek",
-    ]
+interface State {
+  
+}
+
+interface Restaurant {
+    id: number
+    name: string
+}
+
+interface Props {
+    restaurants: Restaurant[]
+}
+
+//setelah bikin interface itu dimasukkan ke Component Props dan State
+export default class RestaurantList extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    
   }
-    render() {
-      return (
-        
-        <ScrollView style={styles.card}>
 
-          {this.state.restaurants.map((restaurants)=>{
-            return <RestaurantItem name={restaurants} />
-          })}
-
-        </ScrollView>
-       
-      )
-    }
+  render() {
+    return (
+      <ScrollView style={styles.container}>
+        {this.props.restaurants.map(restaurant => {
+          return <RestaurantItem key={restaurant.id} name={restaurant.name} />;
+        })}
+      </ScrollView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  card : {
-    height : 50,
-    borderWidth :1,
-    marginTop: 10,
-    backgroundColor: "#fff",
+  container: {
+    paddingLeft: 8,
+    paddingRight: 8
   }
-})
+});

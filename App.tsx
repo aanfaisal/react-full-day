@@ -1,12 +1,57 @@
-import React,{Component, PureComponent} from 'react';
-import { StyleSheet, Text, View, Button, Alert, StatusBar } from 'react-native';
-//import axios from 'axios';
+import React, { Component, PureComponent } from "react";
+import { ActivityIndicator, StyleSheet, Text, View, Button, Alert, StatusBar } from "react-native";
+import axios from "axios";
+import Header from "./src/component/Header";
+import RestaurantList from "./src/component/RestaurantList";
 
-import RestaurantItem from './src/component/Restaurant';
-import Header  from './src/component/Header';
-import RestaurantList from './src/component/RestaurantList';
+interface State {
+  isLoading: boolean;
+  restaurants: any[];
+}
+export default class App extends React.Component<any, State> {
+  constructor(props: any) {
+    super(props);
 
-export default class App extends React.Component {
+    this.state = {
+      isLoading: true,
+      restaurants: []
+    };
+  }
+  componentDidMount() {
+    this.getData();
+  }
+
+  getData = () => {
+    axios
+      .get("https://developers.zomato.com/api/v2.1/search", {
+        headers: {
+          "user-key": "9e4b89f662dfa30f1ea6986c31ccda5b"
+        }
+      })
+      .then(response => {
+        console.log(response.data.restaurants)
+        const restaurants = response.data.restaurants.map((item: any) => {
+          const restaurant = item.restaurant;
+
+          return {
+            id: restaurant.id,
+            name: restaurant.name,
+            address: restaurant.location.address
+          }
+        })
+
+        this.setState({
+          restaurants,
+          isLoading: false
+        })
+        // get data dari zomato
+      })
+
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -20,10 +65,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    marginTop: StatusBar.currentHeight,
-    
-  },
+    backgroundColor: "#fff",
+    marginTop: StatusBar.currentHeight
+  }
 });
-
-
